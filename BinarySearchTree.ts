@@ -21,6 +21,14 @@ export class BinarySearchTree<T> {
         this.initialize(array);
     }
 
+    insert(value: T, target: TreeNode<T> | null = this.root) {
+        if(target === null) return new TreeNode(value);
+        if(value === target.value) return target;
+        if(value > target.value) target.right = this.insert(value, target.right);
+        else target.left = this.insert(value, target.left);
+        return target;
+    }
+
     print(node: TreeNode<T> | null = this.root, prefix = '', isLeft = true) {
         if (node === null) {
             return;

@@ -13,3 +13,7 @@ tree.deleteItem(26);
 tree.print();
 
 console.log(tree.find(16));
+
+const result = tree.levelOrder();
+
+console.log(result);

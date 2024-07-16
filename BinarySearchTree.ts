@@ -1,3 +1,5 @@
+import { LinkedList } from "./LinkedList";
+
 class TreeNode<T> {
     public left: TreeNode<T> | null;
     public right: TreeNode<T> | null;
@@ -55,6 +57,30 @@ export class BinarySearchTree<T extends number | Comparable<T>> {
         if (target.value === value) return target;
         if (value > target.value) return this.find(value, target.right);
         return this.find(value, target.left);
+    }
+
+    levelOrder(): T[];
+    levelOrder(callback: (node: TreeNode<T>) => void): void;
+    levelOrder(callback?: (node: TreeNode<T>) => void): T[] | void {
+        const node = this.root;
+
+        if(!node) return;
+
+        const q = new LinkedList<TreeNode<T>>();
+        const result: T[] = [];
+        q.append(node);
+
+        while(!q.isEmpty()) {
+            const node = q.shift();
+            if(!node) continue;
+            if(callback) callback(node);
+            else result.push(node.value);
+            if(node.left) q.append(node.left);
+            if(node.right) q.append(node.right);
+        }
+
+        if(!callback)
+            return result;
     }
 
     print(node: TreeNode<T> | null = this.root, prefix = '', isLeft = true) {

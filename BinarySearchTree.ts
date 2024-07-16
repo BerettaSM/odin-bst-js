@@ -1,4 +1,4 @@
-import { LinkedList } from "./LinkedList";
+import { LinkedList } from './LinkedList';
 
 class TreeNode<T> {
     public left: TreeNode<T> | null;
@@ -64,23 +64,23 @@ export class BinarySearchTree<T extends number | Comparable<T>> {
     levelOrder(callback?: (node: TreeNode<T>) => void): T[] | void {
         const node = this.root;
 
-        if(!node) return;
+        if (!node && !callback) return [];
+        if (!node) return;
 
         const q = new LinkedList<TreeNode<T>>();
         const result: T[] = [];
         q.append(node);
 
-        while(!q.isEmpty()) {
+        while (!q.isEmpty()) {
             const node = q.shift();
-            if(!node) continue;
-            if(callback) callback(node);
+            if (!node) continue;
+            if (callback) callback(node);
             else result.push(node.value);
-            if(node.left) q.append(node.left);
-            if(node.right) q.append(node.right);
+            if (node.left) q.append(node.left);
+            if (node.right) q.append(node.right);
         }
 
-        if(!callback)
-            return result;
+        if (!callback) return result;
     }
 
     print(node: TreeNode<T> | null = this.root, prefix = '', isLeft = true) {

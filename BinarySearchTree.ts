@@ -13,3 +13,9 @@ class TreeNode<T> {
         this.right = children?.right ?? null;
     }
 }
+
+class BinarySearchTree<T> {
+    private root: TreeNode<T> | null;
+
+    constructor(array: T[] | null = null) {}
+}

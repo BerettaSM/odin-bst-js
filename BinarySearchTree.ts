@@ -21,6 +21,23 @@ export class BinarySearchTree<T> {
         this.initialize(array);
     }
 
+    print(node: TreeNode<T> | null = this.root, prefix = '', isLeft = true) {
+        if (node === null) {
+            return;
+        }
+        if (node.right !== null) {
+            this.print(
+                node.right,
+                `${prefix}${isLeft ? '│   ' : '    '}`,
+                false
+            );
+        }
+        console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.value}`);
+        if (node.left !== null) {
+            this.print(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
+        }
+    }
+
     private initialize(array: T[] | null = null) {
         if (!array) return;
         const parsedArray = this.parseArray(array);

@@ -50,6 +50,13 @@ export class BinarySearchTree<T extends number | Comparable<T>> {
         return target;
     }
 
+    find(value: T, target: TreeNode<T> | null = this.root): TreeNode<T> | null {
+        if (target === null) return null;
+        if (target.value === value) return target;
+        if (value > target.value) return this.find(value, target.right);
+        return this.find(value, target.left);
+    }
+
     print(node: TreeNode<T> | null = this.root, prefix = '', isLeft = true) {
         if (node === null) {
             return;

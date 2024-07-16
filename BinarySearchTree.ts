@@ -14,7 +14,11 @@ class TreeNode<T> {
     }
 }
 
-export class BinarySearchTree<T> {
+export interface Comparable<T> {
+    compareTo(e: T): number;
+}
+
+export class BinarySearchTree<T extends number | Comparable<T>> {
     private root: TreeNode<T> | null = null;
 
     constructor(array: T[] | null = null) {
@@ -22,10 +26,27 @@ export class BinarySearchTree<T> {
     }
 
     insert(value: T, target: TreeNode<T> | null = this.root) {
-        if(target === null) return new TreeNode(value);
-        if(value === target.value) return target;
-        if(value > target.value) target.right = this.insert(value, target.right);
+        if (target === null) return new TreeNode(value);
+        if (value === target.value) return target;
+        if (value > target.value)
+            target.right = this.insert(value, target.right);
         else target.left = this.insert(value, target.left);
+        return target;
+    }
+
+    deleteItem(value: T, target: TreeNode<T> | null = this.root) {
+        if (target === null) return null;
+        if (value < target.value) {
+            target.left = this.deleteItem(value, target.left);
+        } else if (value > target.value) {
+            target.right = this.deleteItem(value, target.right);
+        } else {
+            if (target.left === null) return target.right;
+            if (target.right === null) return target.left;
+            const min = this.findMinChild(target.right);
+            target.value = min.value;
+            target.right = this.deleteItem(min.value, target.right);
+        }
         return target;
     }
 
@@ -46,6 +67,11 @@ export class BinarySearchTree<T> {
         }
     }
 
+    private findMinChild(node: TreeNode<T>) {
+        while (node.left) node = node.left;
+        return node;
+    }
+
     private initialize(array: T[] | null = null) {
         if (!array) return;
         const parsedArray = this.parseArray(array);
@@ -54,7 +80,17 @@ export class BinarySearchTree<T> {
 
     private parseArray(array: T[]) {
         const uniques = new Set(array);
-        return [...uniques].sort();
+        return [...uniques].sort(this.compare);
+    }
+
+    private compare(a: T, b: T) {
+        if (typeof a === 'number' && typeof b === 'number') {
+            return a - b;
+        }
+        if (typeof a === 'number' || typeof b === 'number') {
+            throw new Error('Uncomparable types.');
+        }
+        return a.compareTo(b);
     }
 
     private buildTree(

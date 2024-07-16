@@ -1,10 +1,14 @@
 import {  BinarySearchTree } from "./BinarySearchTree";
 
 
-const tree = new BinarySearchTree([5, 1, 7, 2, 98, 45, 32, 3]);
+const tree = new BinarySearchTree<number>([1, 4, 7, 9, 14, 16, 20, 26, 27, 30]);
 
 tree.print();
 
-tree.insert(67);
+tree.insert(13);
+
+tree.print();
+
+tree.deleteItem(26);
 
 tree.print();

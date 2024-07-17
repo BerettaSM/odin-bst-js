@@ -84,6 +84,11 @@ export class BinarySearchTree<T extends number | Comparable<T>> {
         return Math.abs(leftHeight - rightHeight) < 2;
     }
 
+    rebalance() {
+        const values = this.inOrder();
+        this.initialize(values);
+    }
+
     levelOrder(): T[];
     levelOrder(callback: (node: TreeNode<T>) => void): void;
     levelOrder(callback?: (node: TreeNode<T>) => void): T[] | void {

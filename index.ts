@@ -21,3 +21,7 @@ console.log(levelOrderResult);
 const preOrderResult = tree.preOrder();
 
 console.log(preOrderResult);
+
+const inOrderResult = tree.inOrder();
+
+console.log(inOrderResult);

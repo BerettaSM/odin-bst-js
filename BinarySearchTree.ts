@@ -103,6 +103,25 @@ export class BinarySearchTree<T extends number | Comparable<T>> {
         return result;
     }
 
+    inOrder(): T[];
+    inOrder(callback: (node: TreeNode<T>) => void): void;
+    inOrder(callback?: (node: TreeNode<T>) => void): T[] | void {
+        const result = this._inOrder();
+        if(!callback) return result.map((n) => n.value);
+        result.forEach(callback);
+    }
+
+    private _inOrder(
+        node: TreeNode<T> | null = this.root,
+        result: TreeNode<T>[] = []
+    ) {
+        if(!node) return result;
+        this._inOrder(node.left, result);
+        result.push(node);
+        this._inOrder(node.right, result);
+        return result;
+    }
+
     print(node: TreeNode<T> | null = this.root, prefix = '', isLeft = true) {
         if (node === null) {
             return;

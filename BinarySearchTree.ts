@@ -21,7 +21,7 @@ export interface Comparable<T> {
 }
 
 export class BinarySearchTree<T extends number | Comparable<T>> {
-    private root: TreeNode<T> | null = null;
+    public root: TreeNode<T> | null = null;
 
     constructor(array: T[] | null = null) {
         this.initialize(array);
@@ -59,6 +59,14 @@ export class BinarySearchTree<T extends number | Comparable<T>> {
         return this.find(value, target.left);
     }
 
+    height(target: TreeNode<T> | null = this.root): number {
+        if(!target) return -1;
+        if(target.left === null && target.right === null) return 0;
+        const leftHeight = this.height(target.left);
+        const rightHeight = this.height(target.right);
+        return Math.max(leftHeight, rightHeight) + 1;
+    }
+
     levelOrder(): T[];
     levelOrder(callback: (node: TreeNode<T>) => void): void;
     levelOrder(callback?: (node: TreeNode<T>) => void): T[] | void {
@@ -88,7 +96,7 @@ export class BinarySearchTree<T extends number | Comparable<T>> {
     preOrder(callback: (node: TreeNode<T>) => void): void;
     preOrder(callback?: (node: TreeNode<T>) => void): T[] | void {
         const result = this._preOrder();
-        if(!callback) return result.map((n) => n.value);
+        if (!callback) return result.map((n) => n.value);
         result.forEach(callback);
     }
 
@@ -96,7 +104,7 @@ export class BinarySearchTree<T extends number | Comparable<T>> {
         node: TreeNode<T> | null = this.root,
         result: TreeNode<T>[] = []
     ) {
-        if(!node) return result;
+        if (!node) return result;
         result.push(node);
         this._preOrder(node.left, result);
         this._preOrder(node.right, result);
@@ -107,7 +115,7 @@ export class BinarySearchTree<T extends number | Comparable<T>> {
     inOrder(callback: (node: TreeNode<T>) => void): void;
     inOrder(callback?: (node: TreeNode<T>) => void): T[] | void {
         const result = this._inOrder();
-        if(!callback) return result.map((n) => n.value);
+        if (!callback) return result.map((n) => n.value);
         result.forEach(callback);
     }
 
@@ -115,7 +123,7 @@ export class BinarySearchTree<T extends number | Comparable<T>> {
         node: TreeNode<T> | null = this.root,
         result: TreeNode<T>[] = []
     ) {
-        if(!node) return result;
+        if (!node) return result;
         this._inOrder(node.left, result);
         result.push(node);
         this._inOrder(node.right, result);
@@ -126,7 +134,7 @@ export class BinarySearchTree<T extends number | Comparable<T>> {
     postOrder(callback: (node: TreeNode<T>) => void): void;
     postOrder(callback?: (node: TreeNode<T>) => void): T[] | void {
         const result = this._postOrder();
-        if(!callback) return result.map((n) => n.value);
+        if (!callback) return result.map((n) => n.value);
         result.forEach(callback);
     }
 
@@ -134,7 +142,7 @@ export class BinarySearchTree<T extends number | Comparable<T>> {
         node: TreeNode<T> | null = this.root,
         result: TreeNode<T>[] = []
     ) {
-        if(!node) return result;
+        if (!node) return result;
         this._postOrder(node.left, result);
         this._postOrder(node.right, result);
         result.push(node);

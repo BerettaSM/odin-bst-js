@@ -14,18 +14,4 @@ tree.print();
 
 console.log(tree.find(16));
 
-const levelOrderResult = tree.levelOrder();
-
-console.log(levelOrderResult);
-
-const preOrderResult = tree.preOrder();
-
-console.log(preOrderResult);
-
-const inOrderResult = tree.inOrder();
-
-console.log(inOrderResult);
-
-const postOrderResult = tree.postOrder();
-
-console.log(postOrderResult);
+console.log(tree.height(tree.find(4)));

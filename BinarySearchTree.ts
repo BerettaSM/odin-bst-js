@@ -62,25 +62,26 @@ export class BinarySearchTree<T extends number | Comparable<T>> {
     levelOrder(): T[];
     levelOrder(callback: (node: TreeNode<T>) => void): void;
     levelOrder(callback?: (node: TreeNode<T>) => void): T[] | void {
-        const node = this.root;
+        const result = this._levelOrder();
+        if(!callback) return result.map(n => n.value);
+        result.forEach(callback);
+    }
 
-        if (!node && !callback) return [];
-        if (!node) return;
-
+    private _levelOrder() {
+        if (!this.root) return [];
+        
         const q = new LinkedList<TreeNode<T>>();
-        const result: T[] = [];
-        q.append(node);
+        const result: TreeNode<T>[] = [];
+        q.append(this.root);
 
         while (!q.isEmpty()) {
-            const node = q.shift();
-            if (!node) continue;
-            if (callback) callback(node);
-            else result.push(node.value);
+            const node = q.shift()!;
+            result.push(node);
             if (node.left) q.append(node.left);
             if (node.right) q.append(node.right);
         }
 
-        if (!callback) return result;
+        return result;
     }
 
     print(node: TreeNode<T> | null = this.root, prefix = '', isLeft = true) {

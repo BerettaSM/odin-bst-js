@@ -15,3 +15,5 @@ tree.print();
 console.log(tree.find(16));
 
 console.log(tree.height(tree.find(4)));
+
+console.log(tree.depth(tree.find(4)))

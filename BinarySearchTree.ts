@@ -67,6 +67,13 @@ export class BinarySearchTree<T extends number | Comparable<T>> {
         return Math.max(leftHeight, rightHeight) + 1;
     }
 
+    depth(target: TreeNode<T> | null = this.root): number {
+        const rootHeight = this.height(this.root);
+        const targetHeight = this.height(target);
+        if([rootHeight, targetHeight].includes(-1)) return -1;
+        return rootHeight - targetHeight;
+    }
+
     levelOrder(): T[];
     levelOrder(callback: (node: TreeNode<T>) => void): void;
     levelOrder(callback?: (node: TreeNode<T>) => void): T[] | void {

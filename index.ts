@@ -14,6 +14,10 @@ tree.print();
 
 console.log(tree.find(16));
 
-const result = tree.levelOrder();
+const levelOrderResult = tree.levelOrder();
 
-console.log(result);
+console.log(levelOrderResult);
+
+const preOrderResult = tree.preOrder();
+
+console.log(preOrderResult);

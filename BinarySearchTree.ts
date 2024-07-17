@@ -122,6 +122,25 @@ export class BinarySearchTree<T extends number | Comparable<T>> {
         return result;
     }
 
+    postOrder(): T[];
+    postOrder(callback: (node: TreeNode<T>) => void): void;
+    postOrder(callback?: (node: TreeNode<T>) => void): T[] | void {
+        const result = this._postOrder();
+        if(!callback) return result.map((n) => n.value);
+        result.forEach(callback);
+    }
+
+    private _postOrder(
+        node: TreeNode<T> | null = this.root,
+        result: TreeNode<T>[] = []
+    ) {
+        if(!node) return result;
+        this._postOrder(node.left, result);
+        this._postOrder(node.right, result);
+        result.push(node);
+        return result;
+    }
+
     print(node: TreeNode<T> | null = this.root, prefix = '', isLeft = true) {
         if (node === null) {
             return;

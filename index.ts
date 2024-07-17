@@ -1,21 +1,29 @@
 import { BinarySearchTree } from './BinarySearchTree';
+import { randomNumber } from './utils';
 
-const tree = new BinarySearchTree<number>([1, 4, 7, 9, 14, 16, 20, 26, 27, 30]);
+const numbers = [...Array(randomNumber(15, 30))].map(() => randomNumber(0, 100));
+const tree = new BinarySearchTree<number>(numbers);
 
-console.log(tree.isBalanced())
-tree.insert(31)
-tree.print();
+console.log('Is balanced?', tree.isBalanced())
 
-tree.insert(13);
+console.log('Level order', tree.levelOrder());
+console.log('Pre order', tree.preOrder());
+console.log('In order', tree.inOrder());
+console.log('Post order', tree.postOrder());
 
-tree.print();
+console.log('Unbalancing the tree...');
+for(let i = 0;i < 5; i++) {
+    tree.insert(randomNumber(100, 200));
+}
 
-tree.deleteItem(26);
+console.log('Is balanced?', tree.isBalanced());
 
-tree.print();
+console.log('Rebalancing the tree...');
+tree.rebalance();
 
-console.log(tree.find(16));
+console.log('Is balanced?', tree.isBalanced());
 
-console.log(tree.height(tree.find(133)));
-
-console.log(tree.depth(tree.find(133)))
+console.log('Level order', tree.levelOrder());
+console.log('Pre order', tree.preOrder());
+console.log('In order', tree.inOrder());
+console.log('Post order', tree.postOrder());

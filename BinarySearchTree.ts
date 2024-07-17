@@ -60,8 +60,8 @@ export class BinarySearchTree<T extends number | Comparable<T>> {
     }
 
     height(target: TreeNode<T> | null = this.root): number {
-        if(!target) return -1;
-        if(target.left === null && target.right === null) return 0;
+        if (!target) return -1;
+        if (target.left === null && target.right === null) return 0;
         const leftHeight = this.height(target.left);
         const rightHeight = this.height(target.right);
         return Math.max(leftHeight, rightHeight) + 1;
@@ -70,8 +70,18 @@ export class BinarySearchTree<T extends number | Comparable<T>> {
     depth(target: TreeNode<T> | null = this.root): number {
         const rootHeight = this.height(this.root);
         const targetHeight = this.height(target);
-        if([rootHeight, targetHeight].includes(-1)) return -1;
+        if ([rootHeight, targetHeight].includes(-1)) return -1;
         return rootHeight - targetHeight;
+    }
+
+    isBalanced(target: TreeNode<T> | null = this.root) {
+        if (!target) return true;
+        if (!this.isBalanced(target.left) || !this.isBalanced(target.right)) {
+            return false;
+        }
+        const leftHeight = this.height(target.left);
+        const rightHeight = this.height(target.right);
+        return Math.abs(leftHeight - rightHeight) < 2;
     }
 
     levelOrder(): T[];
